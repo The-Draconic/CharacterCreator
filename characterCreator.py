@@ -6,7 +6,7 @@ file_exists = os.path.isfile('characters.csv')
 mode = 'a' if file_exists else 'w'
 
 # Define the list of races, classes, and alignments
-RACES = ['Human', 'Elf', 'Dwarf', 'Halfling']
+RACES = ['Human', 'Elf', 'Dwarf', 'Halfling', 'Dragonborn', 'Half-Elf', 'Gnome', 'Tiefling', 'Half-Orc']
 CLASSES = {
     'Fighter': ['Strength', 'Constitution'],
     'Wizard': ['Intelligence', 'Wisdom'],
@@ -33,12 +33,14 @@ def roll_stats():
         rolls = [random.randint(2, 6) if roll == 1 else roll for roll in rolls]
     return sum(rolls[1:])
 
-def point_buy_stats(points):
-    stats = [8, 8, 8, 8, 8, 8]
+STAT_RANGE = range(8, 17)
+
+def point_buy_stats(points = 27):
+    stats = [8] * 6
     points = int(points)
     while points > 0:
         stat = random.randint(0, 5)
-        if stats[stat] >= 15:
+        if stats[stat] >= 16:
             continue  # skip if the stat is already at the maximum value
         else:
             cost = POINT_BUY_COST[stats[stat] + 1] - POINT_BUY_COST[stats[stat]]
@@ -85,7 +87,7 @@ def generate_characters(num_characters=1, method_ratio=[1]):
 
 
 # Generate 10 characters with a ratio of 2 Point Buy to 1 Dice Rolling, and save the characters to a CSV file
-characters = generate_characters(num_characters=4, method_ratio=[2, 1])
+characters = generate_characters(num_characters=10, method_ratio=[2, 1])
 
 with open('Data/data.csv', mode=mode, newline='') as csv_file:
     fieldnames = ['race', 'class', 'alignment', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
