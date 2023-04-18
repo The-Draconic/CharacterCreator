@@ -1,0 +1,17 @@
+---
+title: "Predicting Character Class"
+output: html_notebook
+---
+
+importing data from csv files
+```{r}
+data <- read.csv("Data/train_data.csv")
+train.data <- data[,4:length(data)-1]
+labels.data <- data[,length(data)]
+```
+
+creating a predictive model knn
+```{r}
+
+```
+
