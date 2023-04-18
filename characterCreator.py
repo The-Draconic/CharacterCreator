@@ -25,34 +25,54 @@ ALIGNMENTS = ['Lawful Good', 'Neutral Good', 'Chaotic Good', 'Lawful Neutral', '
 # POINT_BUY_COST = [0, 2, 5, 9, 15, 20, 27]
 POINT_BUY_COST = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 7, 7, 8]
 
-
 def roll_stats():
     """Roll 4d6, drop the lowest roll, and reroll 1s"""
-    rolls = sorted([random.randint(1, 6) for _ in range(4)])
-    if rolls[0] == 1:
-        rolls = [random.randint(2, 6) if roll == 1 else roll for roll in rolls]
-    return sum(rolls[1:])
+    stats = {}
+    for stat_name in ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma']:
+        rolls = sorted([random.randint(1, 6) for _ in range(4)])
+        if rolls[0] == 1:
+            rolls = [random.randint(2, 6) if roll == 1 else roll for roll in rolls]
+        stat_value = sum(rolls[1:])
+        stats[stat_name] = stat_value
+    return stats
 
 STAT_RANGE = range(8, 17)
 
 def point_buy_stats(points = 27):
-    stats = [8] * 6
-    points = int(points)
-    while points > 0:
-        stat = random.randint(0, 5)
-        if stats[stat] >= 16:
-            continue  # skip if the stat is already at the maximum value
-        else:
-            cost = POINT_BUY_COST[stats[stat] + 1] - POINT_BUY_COST[stats[stat]]
-        if cost <= points:
-            stats[stat] += 1
-            points -= cost
+    # Set the point costs for each ability score
+    point_costs = {
+        8: 0,
+        9: 1,
+        10: 2,
+        11: 3,
+        12: 4,
+        13: 5,
+        14: 7,
+        15: 9
+    }
+    
+    # Set the maximum number of points that can be spent
+    max_points = 27
+    
+    # Initialize an empty dictionary to store the ability scores
+    stats = {}
+    
+    # Loop through each ability score and randomly generate a score
+    for ability in ['Strength', 'Dexterity', 'Constitution', 'Intelligence', 'Wisdom', 'Charisma']:
+        valid_score = False
+        while not valid_score:
+            score = random.randint(8, 15)
+            if score <= (15 - max_points):
+                valid_score = True
+                stats[ability] = score
+                max_points -= point_costs[score]
+
     return stats
 
 def generate_characters(num_characters=1, method_ratio=[1]):
     """Generate a list of characters using the specified method ratio"""
     methods = {
-        'Dice Rolling': lambda: [roll_stats() for _ in range(6)],
+        'Dice Rolling': lambda: [roll_stats()],
         'Point Buy': lambda: point_buy_stats(27)
     }
     characters = []
@@ -62,9 +82,9 @@ def generate_characters(num_characters=1, method_ratio=[1]):
         method_count[method] += 1
         stats = methods[method]()
         print(stats)
-        character_class = random.choice(list(CLASSES.keys()))
+        # character_class = random.choice(list(CLASSES.keys()))
         # top_stat, second_stat = CLASSES[character_class]
-        # Assign the class bonuses to the top and second stats
+        # # Assign the class bonuses to the top and second stats
         # top_stat_index = CLASSES.index(top_stat)
         # second_stat_index = CLASSES.index(second_stat)
         # stats[top_stat_index] += 2
@@ -73,12 +93,12 @@ def generate_characters(num_characters=1, method_ratio=[1]):
             'race': random.choice(RACES),
             # 'class': character_class,
             'align': random.choice(ALIGNMENTS),
-            'str': stats[0],
-            'dex': stats[1],
-            'con': stats[2],
-            'int': stats[3],
-            'wis': stats[4],
-            'cha': stats[5]
+            'str': stats[0]["Strength"],
+            'dex': stats[0]["Dexterity"],
+            'con': stats[0]["Constitution"],
+            'int': stats[0]["Intelligence"],
+            'wis': stats[0]["Wisdom"],
+            'cha': stats[0]["Charisma"]
         }
         characters.append(character)
 
@@ -86,10 +106,9 @@ def generate_characters(num_characters=1, method_ratio=[1]):
     return characters
 
 
-# Generate 10 characters with a ratio of 2 Point Buy to 1 Dice Rolling, and save the characters to a CSV file
 characters = generate_characters(num_characters=10, method_ratio=[1, 0])
 
-with open('Data/data.csv', mode=mode, newline='') as csv_file:
+with open('Data/data.csv', mode='w', newline='') as csv_file:
     fieldnames = ['race', 'align', 'str', 'dex', 'con', 'int', 'wis', 'cha']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 

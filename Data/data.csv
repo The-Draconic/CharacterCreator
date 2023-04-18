@@ -1,11 +1,11 @@
-race,align,str,dex,con,int,wis,cha
-Dragonborn,Chaotic Evil,7,11,15,14,8,10
-Dragonborn,Neutral Good,13,15,14,12,9,16
-Dwarf,Lawful Evil,12,10,8,11,9,10
-Human,Chaotic Good,14,11,16,10,17,18
-Dragonborn,Chaotic Neutral,16,14,13,18,7,14
-Gnome,Lawful Good,15,9,12,8,13,11
-Human,Chaotic Evil,14,17,12,11,13,12
-Half-Elf,True Neutral,12,12,13,14,12,13
-Dwarf,True Neutral,12,14,14,12,15,12
-Halfling,Lawful Good,14,15,14,11,15,14
+race,align,str,dex,con,int,wis,cha,class
+Gnome,Lawful Neutral,18,17,12,11,10,8,rogue
+Elf,Neutral Evil,9,14,13,12,13,15,bard
+Human,Chaotic Neutral,10,12,9,6,14,14,warlock
+Human,Lawful Neutral,11,14,13,11,13,15,sorcerer
+Gnome,Lawful Good,16,16,16,15,17,14,ranger
+Half-Elf,Chaotic Neutral,14,14,13,14,10,14,wizard
+Human,Chaotic Good,15,12,8,12,14,16,paladin
+Tiefling,Neutral Good,13,16,15,12,15,12,rogue
+Dragonborn,Chaotic Neutral,7,17,18,18,15,13,wizard
+Half-Orc,True Neutral,17,16,16,8,10,12,fighter
