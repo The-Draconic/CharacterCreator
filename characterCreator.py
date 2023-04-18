@@ -106,7 +106,7 @@ def generate_characters(num_characters=1, method_ratio=[1]):
     return characters
 
 
-characters = generate_characters(num_characters=10, method_ratio=[1, 0])
+characters = generate_characters(num_characters=1000, method_ratio=[1, 0])
 
 with open('Data/data.csv', mode='w', newline='') as csv_file:
     fieldnames = ['race', 'align', 'str', 'dex', 'con', 'int', 'wis', 'cha']
