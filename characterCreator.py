@@ -71,14 +71,14 @@ def generate_characters(num_characters=1, method_ratio=[1]):
         # stats[second_stat_index] += 1
         character = {
             'race': random.choice(RACES),
-            'class': character_class,
-            'alignment': random.choice(ALIGNMENTS),
-            'strength': stats[0],
-            'dexterity': stats[1],
-            'constitution': stats[2],
-            'intelligence': stats[3],
-            'wisdom': stats[4],
-            'charisma': stats[5]
+            # 'class': character_class,
+            'align': random.choice(ALIGNMENTS),
+            'str': stats[0],
+            'dex': stats[1],
+            'con': stats[2],
+            'int': stats[3],
+            'wis': stats[4],
+            'cha': stats[5]
         }
         characters.append(character)
 
@@ -87,10 +87,10 @@ def generate_characters(num_characters=1, method_ratio=[1]):
 
 
 # Generate 10 characters with a ratio of 2 Point Buy to 1 Dice Rolling, and save the characters to a CSV file
-characters = generate_characters(num_characters=10, method_ratio=[2, 1])
+characters = generate_characters(num_characters=10, method_ratio=[1, 0])
 
 with open('Data/data.csv', mode=mode, newline='') as csv_file:
-    fieldnames = ['race', 'class', 'alignment', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
+    fieldnames = ['race', 'align', 'str', 'dex', 'con', 'int', 'wis', 'cha']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
     writer.writeheader()
